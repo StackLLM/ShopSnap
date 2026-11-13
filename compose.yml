@@ -1,0 +1,16 @@
+services:
+  shopsnap:
+    build: .
+    container_name: shopsnap
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DESTINATION_LABEL: ${DESTINATION_LABEL:-}
+    ports:
+      - "127.0.0.1:${SHOPSNAP_PORT:-8765}:8080"   # accessible seulement depuis cette machine
+    volumes:
+      - ${SHOPSNAP_DESTINATION:-./donnees}:/data   # destination finale (voir .env.example)
+      - ./attente:/attente                         # téléchargements pas encore enregistrés
+      - ./cookies:/cookies:ro                      # optionnel : cookies.txt d'un compte secondaire
+    restart: unless-stopped

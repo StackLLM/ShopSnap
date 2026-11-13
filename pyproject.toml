@@ -1,0 +1,9 @@
+[project]
+name = "shopsnap"
+version = "1.0.0"
+description = "Récupère photos, vidéos et Reels Instagram (et pubs Meta Ad Library) en qualité maximale, avec une page web locale."
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

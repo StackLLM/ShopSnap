@@ -1,0 +1,4 @@
+# Versions figées : mêmes versions que celles testées
+flask==3.1.2
+instaloader==4.16
+yt-dlp[default,curl-cffi]==2026.10.26

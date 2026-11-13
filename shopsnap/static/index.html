@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShopSnap</title>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<main>
+  <h1>ShopSnap</h1>
+  <p class="sub">Glisse un lien Instagram dans la bonne case. Qualité maximale, sans réencodage.</p>
+
+  <div class="grid">
+    <form class="card" data-kind="profil">
+      <span class="tag">instaloader</span>
+      <h2>Profil entier</h2>
+      <p>Photos, carrousels, vidéos et Reels d'un profil. Lien du profil ou simple nom (un par ligne).</p>
+      <div class="drop"><textarea placeholder="https://www.instagram.com/nom_du_profil/"></textarea></div>
+      <button type="submit">Télécharger le profil</button>
+    </form>
+
+    <form class="card" data-kind="lien">
+      <span class="tag">yt-dlp</span>
+      <h2>Un lien</h2>
+      <p>Post, Reel ou pub de la Meta Ad Library. Un lien par ligne.</p>
+      <div class="drop"><textarea placeholder="https://www.instagram.com/reel/XXXXXXXX/"></textarea></div>
+      <button type="submit">Télécharger le lien</button>
+    </form>
+  </div>
+
+  <p class="note" id="note">Fichiers enregistrés dans le dossier de destination.</p>
+
+  <section id="abos" class="card abos" hidden>
+    <div class="abos-head">
+      <div>
+        <h2>Mes abonnements</h2>
+        <p>Coche les pages : leur lien entre tout seul dans « Profil entier ». Puis clique sur « Télécharger le profil ».</p>
+      </div>
+      <span class="compteur" id="abos-compteur">0 coché</span>
+    </div>
+    <div class="onglets" id="abos-onglets"></div>
+    <div class="abos-outils">
+      <input type="search" id="abos-recherche" placeholder="Rechercher un nom…">
+      <button type="button" class="btn ghost" id="abos-tout">Cocher la liste affichée</button>
+      <button type="button" class="btn ghost" id="abos-rien">Tout décocher</button>
+    </div>
+    <p class="avert">Chaque profil coché est un téléchargement complet. L'app laisse 90 s entre deux profils pour éviter un blocage : commence par quelques pages à la fois.</p>
+    <div class="abos-liste" id="abos-liste"></div>
+  </section>
+
+  <h3>Téléchargements</h3>
+  <div id="jobs"><p class="empty">Aucun téléchargement pour l'instant.</p></div>
+</main>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>

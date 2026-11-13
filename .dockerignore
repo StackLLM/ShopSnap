@@ -1,0 +1,9 @@
+.git
+.env
+donnees
+attente
+cookies
+tests
+scripts
+__pycache__
+*.md

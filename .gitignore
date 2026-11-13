@@ -1,0 +1,19 @@
+# Réglages locaux (chemins de la machine)
+.env
+
+# Données personnelles et médias : jamais dans le dépôt
+donnees/
+attente/
+cookies/*
+!cookies/.gitkeep
+*.json.local
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Système
+.DS_Store
+CLAUDE.local.md
