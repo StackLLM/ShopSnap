@@ -27,7 +27,8 @@ export default {
       },
       fontFamily: {
         sans: ['"Inter Variable"', "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ['"Cormorant Garamond"', "ui-serif", "Georgia", "serif"],
+        display: ['"Geist Variable"', '"Inter Variable"', "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ['"Geist Mono Variable"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       borderRadius: { lg: "var(--radius)", md: "calc(var(--radius) - 4px)", sm: "calc(var(--radius) - 8px)" },
       keyframes: {

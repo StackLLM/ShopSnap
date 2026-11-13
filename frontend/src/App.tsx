@@ -110,11 +110,11 @@ export default function App() {
         {/* En-tête */}
         <header className="flex items-center justify-between gap-4 py-6">
           <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-full border border-primary/40 nacre font-display text-xl text-primary dark:bg-none dark:bg-primary/10">
+            <span className="grid h-10 w-10 place-items-center rounded-full border border-primary/40 nacre font-display text-lg font-semibold text-primary dark:bg-none dark:bg-primary/10">
               S
             </span>
             <div className="leading-tight">
-              <p className="font-display text-xl tracking-wide">ShopSnap</p>
+              <p className="font-display text-lg font-semibold tracking-tight">ShopSnap</p>
               <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Banque de visuels</p>
             </div>
           </div>
@@ -139,12 +139,12 @@ export default function App() {
           <h1 className="titre-luxe mx-auto mt-5 max-w-3xl text-5xl leading-[1.02] sm:text-7xl">
             <ShinyText
               size="4xl"
-              weight="normal"
+              weight="semibold"
               baseColor={sombre ? "#E9DFCC" : "#1F2430"}
               shineColor={sombre ? "#FFF6E2" : "#B9B3E6"}
               speed={4}
               intensity={0.8}
-              className="font-display !text-5xl sm:!text-7xl"
+              className="font-display !text-5xl font-semibold tracking-[-0.045em] sm:!text-7xl"
             >
               ShopSnap
             </ShinyText>
@@ -173,7 +173,7 @@ export default function App() {
                 colorScheme="custom"
                 customColor="hsl(var(--foreground))"
                 className="mt-1"
-                numberClassName="font-display text-4xl"
+                numberClassName="chiffre text-4xl"
               />
             </div>
           ))}

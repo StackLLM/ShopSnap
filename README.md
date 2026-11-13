@@ -144,4 +144,4 @@ Les contenus récupérés restent la propriété de leurs auteurs : ne les publi
 
 Le code de ShopSnap est fourni tel quel par StackLLM. Dépendances : instaloader (MIT), yt-dlp (Unlicense),
 gallery-dl (GPL-2.0, appelé comme programme séparé), Flask (BSD-3-Clause), FFmpeg (LGPL/GPL, installé dans l'image Docker),
-Lightswind UI (MIT), React (MIT), Tailwind CSS (MIT), framer-motion (MIT), lucide (ISC), polices Inter et Cormorant Garamond (OFL).
+Lightswind UI (MIT), React (MIT), Tailwind CSS (MIT), framer-motion (MIT), lucide (ISC), polices Inter, Geist et Geist Mono (OFL).
