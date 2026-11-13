@@ -44,19 +44,19 @@ export function useAbonnements() {
   return data;
 }
 
-/** Thème clair / sombre, mémorisé dans le navigateur (sombre par défaut). */
+/** Thème nacré (par défaut) / sombre, mémorisé dans le navigateur. */
 export function useTheme() {
   const [sombre, setSombre] = useState(() => {
     try {
-      return localStorage.getItem("shopsnap-theme") !== "clair";
+      return localStorage.getItem("shopsnap-theme-v2") === "sombre";
     } catch {
-      return true;
+      return false;
     }
   });
   useEffect(() => {
     document.documentElement.classList.toggle("dark", sombre);
     try {
-      localStorage.setItem("shopsnap-theme", sombre ? "sombre" : "clair");
+      localStorage.setItem("shopsnap-theme-v2", sombre ? "sombre" : "nacre");
     } catch {
       /* stockage indisponible : pas grave */
     }

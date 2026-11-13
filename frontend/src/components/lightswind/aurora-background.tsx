@@ -1,5 +1,5 @@
 "use client";
-// ShopSnap : palette passée en champagne / or (couleurs d'origine bleues).
+// ShopSnap : couleurs reliées aux variables de thème --nacre-* (nacre en clair, or en sombre).
 import { cn } from "@/components/lib/utils";
 import React, { ReactNode } from "react";
 
@@ -36,11 +36,11 @@ export const AuroraBackground = ({
               "--white-gradient":
                 "repeating-linear-gradient(100deg,#fff_0%,#fff_7%,transparent_10%,transparent_12%,#fff_16%)",
 
-              "--blue-300": "#D9BC84", // Soft Sky Blue
-              "--blue-400": "#C9A96E", // Mild Blue
-              "--blue-500": "#8E6F3B", // Calm Professional Blue
-              "--indigo-300": "#E8D5A8", // Soft Lavender Indigo
-              "--violet-200": "#F3E7CF", // Gentle Violet
+              "--blue-300": "var(--nacre-3)", // Soft Sky Blue
+              "--blue-400": "var(--nacre-5)", // Mild Blue
+              "--blue-500": "var(--nacre-1)", // Calm Professional Blue
+              "--indigo-300": "var(--nacre-2)", // Soft Lavender Indigo
+              "--violet-200": "var(--nacre-4)", // Gentle Violet
               "--green-300": "#6ee7b7", // Soft Mint Green
               "--pink-300": "#f9a8d4", // Mild Pink
               "--gray-300": "#d1d5db", // Soft Gray for Text

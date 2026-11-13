@@ -12,7 +12,7 @@ Pensé pour les e-commerçants : constituer la banque de visuels produits d'une 
   un dossier par lien même pour une seule image.
 - **Liste d'abonnements à cocher** : classée Vêtements / Chaussures / Commerce… ; cocher une page remplit le champ Profil.
 - **Anti-blocage** : un téléchargement à la fois, 90 s entre deux profils.
-- **Interface premium** : thème noir et champagne (ou clair ivoire), composants animés [Lightswind](https://lightswind.com),
+- **Interface premium** : thème blanc nacré (graphite, reflets irisés) ou sombre noir et champagne, composants animés [Lightswind](https://lightswind.com),
   visionneuse plein écran, notifications, compteurs, onglets Récupérer / Abonnements / Historique, mobile.
 
 Basé sur trois projets open source : [instaloader](https://github.com/instaloader/instaloader) (Instagram : profils, photos),

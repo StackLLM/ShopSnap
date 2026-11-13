@@ -56,7 +56,7 @@ export function JobCard({ job: j, racine, onEnregistrer, onRejeter }: Props) {
       className="job verre relative overflow-hidden p-5 sm:p-6"
       data-id={j.id}
     >
-      {j.status === "en cours" && <BorderBeam size={180} duration={7} colorFrom="#E8D5A8" colorTo="#8E6F3B" />}
+      {j.status === "en cours" && <BorderBeam size={180} duration={7} colorFrom="var(--nacre-2)" colorTo="hsl(var(--halo))" />}
 
       <header className="flex flex-wrap items-center gap-3">
         <span className="grid h-9 w-9 place-items-center rounded-full border border-border bg-background/50 text-primary">

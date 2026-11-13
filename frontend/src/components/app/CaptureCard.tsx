@@ -38,9 +38,9 @@ export function CaptureCard(p: Props) {
 
   return (
     <InteractiveGradient
-      color={p.sombre ? "#C9A96E" : "#9C7A3C"}
-      glowColor={p.sombre ? "rgba(201,169,110,0.16)" : "rgba(176,141,79,0.14)"}
-      backgroundColor={p.sombre ? "#100E0B" : "#FDFBF7"}
+      color={p.sombre ? "#C9A96E" : "#C9D2E8"}
+      glowColor={p.sombre ? "rgba(201,169,110,0.16)" : "rgba(196,184,232,0.28)"}
+      backgroundColor={p.sombre ? "#100E0B" : "#FFFFFF"}
       borderRadius="1.25rem"
       intensity={70}
       className="block h-full text-left"
@@ -58,7 +58,7 @@ export function CaptureCard(p: Props) {
             <p className="surtitre">{p.surtitre}</p>
             <h2 className="titre-luxe mt-2 text-3xl text-foreground">{p.titre}</h2>
           </div>
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-primary/30 bg-primary/10 text-primary">
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full nacre border border-border text-primary shadow-sm dark:border-primary/30 dark:bg-none dark:bg-primary/10">
             <Icone className="h-5 w-5" strokeWidth={1.5} />
           </span>
         </div>

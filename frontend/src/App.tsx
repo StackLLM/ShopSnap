@@ -93,11 +93,11 @@ export default function App() {
 
   return (
     <div className="grain relative min-h-screen overflow-x-hidden">
-      <TopLoader isLoading={enCours} color="#C9A96E" height={2} showSpinner={false} />
+      <TopLoader isLoading={enCours} color={sombre ? "#C9A96E" : "#8C93C8"} height={2} showSpinner={false} />
       <Toaster position="bottom-right" />
 
       {/* Fond aurore champagne, discret */}
-      <div className="pointer-events-none fixed inset-0 z-0 opacity-[0.35] dark:opacity-25" aria-hidden>
+      <div className="pointer-events-none fixed inset-0 z-0 opacity-70 dark:opacity-25" aria-hidden>
         <AuroraBackground className="h-screen w-screen bg-background dark:bg-background">{null}</AuroraBackground>
       </div>
       <div
@@ -110,7 +110,7 @@ export default function App() {
         {/* En-tête */}
         <header className="flex items-center justify-between gap-4 py-6">
           <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-full border border-primary/40 bg-gradient-to-b from-or-200/20 to-or-600/10 font-display text-xl text-primary">
+            <span className="grid h-10 w-10 place-items-center rounded-full border border-primary/40 nacre font-display text-xl text-primary dark:bg-none dark:bg-primary/10">
               S
             </span>
             <div className="leading-tight">
@@ -119,7 +119,7 @@ export default function App() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="hidden border-border text-muted-foreground sm:inline-flex" withDot dotColor={info?.cookies ? "#4ade80" : "#C9A96E"}>
+            <Badge variant="outline" className="hidden border-border text-muted-foreground sm:inline-flex" withDot dotColor={info?.cookies ? "#22c55e" : sombre ? "#C9A96E" : "#8C93C8"}>
               {info?.cookies ? "Compte connecté" : "Sans compte"}
             </Badge>
             <button
@@ -140,8 +140,8 @@ export default function App() {
             <ShinyText
               size="4xl"
               weight="normal"
-              baseColor={sombre ? "#E9DFCC" : "#2A231B"}
-              shineColor={sombre ? "#FFF6E2" : "#B08D4F"}
+              baseColor={sombre ? "#E9DFCC" : "#1F2430"}
+              shineColor={sombre ? "#FFF6E2" : "#B9B3E6"}
               speed={4}
               intensity={0.8}
               className="font-display !text-5xl sm:!text-7xl"
