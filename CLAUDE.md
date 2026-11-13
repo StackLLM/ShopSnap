@@ -1,6 +1,6 @@
-# ShopSnap (page web locale · Flask + instaloader + yt-dlp · Docker)
+# ShopSnap (page web locale · Flask + instaloader + yt-dlp + gallery-dl · Docker)
 
-Récupère photos, vidéos, Reels et carrousels Instagram (et pubs Meta Ad Library) en qualité maximale pour constituer
+Récupère photos, vidéos, Reels et carrousels Instagram et Facebook (et pubs Meta Ad Library) en qualité maximale pour constituer
 la banque de visuels produits d'une boutique. Dépôt public `StackLLM/ShopSnap`.
 
 ## Commandes
@@ -11,7 +11,7 @@ la banque de visuels produits d'une boutique. Dépôt public `StackLLM/ShopSnap`
 
 ## Architecture
 - `shopsnap/config.py` chemins (`DATA_DIR`=/data, `ATTENTE_DIR`=/attente, cookies), `PAUSE_ENTRE_PROFILS`=90 s.
-- `shopsnap/commandes.py` construit les commandes : profil → instaloader seul ; post `/p/` → instaloader (photos) PUIS yt-dlp (vidéos, erreur « no video » tolérée) ; Reel / autre lien → yt-dlp seul.
+- `shopsnap/commandes.py` construit les commandes : profil → instaloader seul ; post `/p/` → instaloader (photos) PUIS yt-dlp (vidéos, erreur « no video » tolérée) ; Reel / autre lien → yt-dlp seul. Facebook (`est_facebook` ou préfixe `fb:` en profil) → `build_steps_facebook` : page → gallery-dl `/<page>/photos` ; album `/media/set/` → gallery-dl ; Ad Library → yt-dlp SANS `--impersonate` (sinon 403) ; vidéo / Reel / fb.watch / post → yt-dlp ; photo seule → ValueError (message clair).
 - `shopsnap/taches.py` file d'attente, un téléchargement à la fois, statuts `en attente → en cours → prêt | échec`, puis `enregistré | rejeté`.
 - `shopsnap/enregistrement.py` dossier (déplacement, légendes .txt incluses) ou ZIP (`ZIP_STORED`).
 - `shopsnap/routes.py` Flask (`create_app`), `shopsnap/static/` page + `css/style.css` + `js/app.js` (sans framework).
@@ -19,8 +19,8 @@ la banque de visuels produits d'une boutique. Dépôt public `StackLLM/ShopSnap`
 ## Règles (ne pas casser)
 - **Jamais d'enregistrement automatique** : tout arrive dans `attente/<id>/` ; seule l'action de l'utilisateur (Télécharger dans le dossier / en ZIP) écrit dans la destination. « Rejeter » efface.
 - **Qualité** : yt-dlp `-f bv*+ba/b -S res,br,fps --merge-output-format mp4` (pas de réencodage) ; instaloader sans `--no-iphone` (images HD). ffmpeg obligatoire dans l'image.
-- **Rangement** : `profils/<profil>/`, `liens/<compte>/<code du post>/` (un dossier par lien, même une seule image). ZIP = `<dossier>.zip` à côté.
-- **Versions figées** dans `requirements.txt` (instaloader 4.16, yt-dlp 2026.10.26) ; monter de version = retester un post photo, un Reel, un profil.
+- **Rangement** : `profils/<profil>/`, `liens/<compte>/<code du post>/` (Instagram, inchangé) ; `facebook/profils/<page>/`, `facebook/liens/<page>/<id>/`, `facebook/pubs/<id>/`. Un dossier par lien, même une seule image. ZIP = `<dossier>.zip` à côté.
+- **Versions figées** dans `requirements.txt` (instaloader 4.16, yt-dlp 2026.10.26, gallery-dl 1.32.19) ; monter de version = retester un post photo, un Reel, un profil, une page et un album Facebook, une vidéo Facebook.
 - **Aucune donnée personnelle dans le dépôt (public)** : `.env`, `donnees/`, `attente/`, `cookies/*` sont ignorés. Pas de chemin de machine, pas de nom de compte Instagram, pas de liste d'abonnements dans le code ou les docs.
 - Interdit de supprimer ou modifier une fonctionnalité existante sans demande explicite.
 
@@ -33,3 +33,6 @@ la banque de visuels produits d'une boutique. Dépôt public `StackLLM/ShopSnap`
 - Profil yt-dlp (`instagram:user`) cassé en amont → profils uniquement via instaloader.
 - Instagram : au-delà de quelques dizaines de requêtes sans compte → redirection connexion / 429. Garder un téléchargement à la fois et la pause entre profils.
 - Un profil est retéléchargé en entier à chaque fois (pas de `--fast-update`, la zone d'attente est vidée après choix).
+- gallery-dl 1.32.19 : photo Facebook seule cassée (`/photo/?fbid=` → 404 sur `media/set/?set=` ; `/<page>/photos/<set>/<id>/` → tout l'album). D'où le refus explicite.
+- gallery-dl lit les photos d'une page une par une (`--sleep-request 1.5-3`) : une grosse page prend du temps.
+- Un nom seul dans « Profil entier » = Instagram ; pour Facebook, lien de la page ou `fb:<page>`.

@@ -55,7 +55,7 @@ async function refresh() {
   const html = jobs.map(j => `
     <div class="job">
       <div class="job-head">
-        <span class="tag">${j.kind === 'profil' ? 'instaloader' : 'yt-dlp'}</span>
+        <span class="tag">${/facebook\.com|fb\.watch|fb\.com\/|^fb:/i.test(j.entry) ? 'Facebook' : 'Instagram'} · ${j.kind === 'profil' ? 'profil' : 'lien'}</span>
         <span class="entry">${esc(j.entry)}</span>
         <span class="st ${esc(j.status)}">${esc(j.status)}${j.files.length ? ' · ' + j.files.length + ' fichiers' : ''}</span>
       </div>

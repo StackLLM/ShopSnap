@@ -1,18 +1,20 @@
 # ShopSnap
 
-**Récupère les photos, vidéos, Reels et carrousels d'Instagram en qualité maximale, depuis une page web locale.**
-Pensé pour les e-commerçants : constituer la banque de visuels produits d'une boutique à partir des pages Instagram suivies.
+**Récupère les photos, vidéos, Reels et carrousels d'Instagram et de Facebook en qualité maximale, depuis une page web locale.**
+Pensé pour les e-commerçants : constituer la banque de visuels produits d'une boutique à partir des pages suivies.
 
-- Un **profil entier** (photos, carrousels, vidéos, Reels) ou **un seul lien** (post, Reel, pub de la Meta Ad Library).
+- **Instagram** : un **profil entier** (photos, carrousels, vidéos, Reels) ou **un seul lien** (post, Reel).
+- **Facebook** : les **photos d'une page**, un **album**, une **vidéo** ou un **Reel**, une **pub de la Meta Ad Library**.
 - **Qualité d'origine** : meilleure version disponible, aucun réencodage (assemblage vidéo + son par simple copie).
 - **Tu décides** : chaque récupération attend en zone d'attente, avec aperçu. Rien n'est enregistré avant ton clic
   (**dossier** ou **ZIP**), ou tu **rejettes**.
-- **Rangement automatique** : `profils/<profil>/` et `liens/<compte>/<code du post>/`, même pour une seule image.
+- **Rangement automatique** : `profils/<profil>/` et `liens/<compte>/<code du post>/` (Instagram), `facebook/…` (Facebook),
+  un dossier par lien même pour une seule image.
 - **Liste d'abonnements à cocher** : classée Vêtements / Chaussures / Commerce… ; cocher une page remplit le champ Profil.
 - **Anti-blocage** : un téléchargement à la fois, 90 s entre deux profils.
 
-Basé sur deux projets open source : [instaloader](https://github.com/instaloader/instaloader) (profils, photos)
-et [yt-dlp](https://github.com/yt-dlp/yt-dlp) (vidéos, Reels, pubs).
+Basé sur trois projets open source : [instaloader](https://github.com/instaloader/instaloader) (Instagram : profils, photos),
+[yt-dlp](https://github.com/yt-dlp/yt-dlp) (vidéos, Reels, pubs) et [gallery-dl](https://github.com/mikf/gallery-dl) (Facebook : photos, albums).
 
 ---
 
@@ -44,11 +46,15 @@ Les deux outils l'utilisent alors automatiquement.
 
 ## Utilisation
 
-1. **Profil entier** : coller le lien du profil ou son nom (un par ligne), ou cocher des pages dans « Mes abonnements ».
-2. **Un lien** : coller ou glisser un lien de post, de Reel, ou de pub Meta Ad Library. Pour un post photo,
-   instaloader prend les photos et yt-dlp les vidéos éventuelles.
+1. **Profil entier** (un par ligne) :
+   - Instagram : lien du profil ou simple nom, ou cocher des pages dans « Mes abonnements » ;
+   - Facebook : lien de la page (`facebook.com/<page>`) ou `fb:<page>` → toutes les photos de la page.
+2. **Un lien** : coller ou glisser un lien.
+   - Instagram : post (instaloader prend les photos, yt-dlp les vidéos éventuelles) ou Reel.
+   - Facebook : album (`facebook.com/media/set/?set=…`), vidéo, Reel, `fb.watch`, pub Meta Ad Library.
 3. Quand le statut passe à **prêt**, vérifier l'aperçu puis :
    - **Télécharger dans le dossier** → `destination/liens/<compte>/<code>/` ou `destination/profils/<profil>/`
+     (Facebook : `destination/facebook/profils/<page>/`, `facebook/liens/<page>/<id>/`, `facebook/pubs/<id>/`)
    - **Télécharger en ZIP** → `destination/liens/<compte>/<code>.zip` (sans compression : qualité intacte)
    - **Rejeter** → efface la récupération
 
@@ -71,7 +77,7 @@ ShopSnap/
 ├── shopsnap/                  Application (paquet Python)
 │   ├── __main__.py            Lancement : python -m shopsnap
 │   ├── config.py              Chemins, extensions, pause anti-blocage
-│   ├── commandes.py           Commandes instaloader / yt-dlp (qualité, rangement)
+│   ├── commandes.py           Commandes instaloader / yt-dlp / gallery-dl (qualité, rangement)
 │   ├── taches.py              File d'attente et exécution (zone d'attente)
 │   ├── enregistrement.py      Enregistrement en dossier ou en ZIP
 │   ├── routes.py              Page web et API JSON (Flask)
@@ -81,7 +87,7 @@ ShopSnap/
 │   └── recepteur.py           Récepteur local ponctuel (transfert d'une liste depuis le navigateur)
 ├── tests/                     Tests pytest (commandes, enregistrement, classement)
 ├── Dockerfile · compose.yml   Image Python 3.12 + ffmpeg, versions figées
-├── requirements.txt           flask, instaloader, yt-dlp (versions figées)
+├── requirements.txt           flask, instaloader, yt-dlp, gallery-dl (versions figées)
 └── .env.example               Réglages locaux à copier en .env
 ```
 
@@ -111,14 +117,18 @@ Après une modification : `docker compose up -d --build`.
 - yt-dlp ne télécharge pas les photos d'Instagram ; instaloader sans compte donne certaines vidéos en qualité réduite.
 - Instagram limite les requêtes : au-delà, blocage temporaire (« Réessayez plus tard »). Aller doucement.
 - Un profil est retéléchargé en entier à chaque fois (rien ne reste sur place avant l'enregistrement).
+- Facebook : une **photo seule** n'est pas prise en charge (gallery-dl 1.32.19 renvoie une erreur ou tout l'album) :
+  utiliser le lien de l'album ou la page. Les photos d'une page sont lues une par une (pause 1,5–3 s) : c'est long.
+- Facebook : les pubs Meta Ad Library dépendent de l'outil amont et peuvent échouer (pub expirée, protection du site).
+- Beaucoup de contenus Facebook demandent un compte connecté (`cookies/cookies.txt`).
 
 ## Usage responsable
 
-ShopSnap automatise l'accès à Instagram, ce que les conditions d'utilisation de Meta n'autorisent pas.
+ShopSnap automatise l'accès à Instagram et Facebook, ce que les conditions d'utilisation de Meta n'autorisent pas.
 Les contenus récupérés restent la propriété de leurs auteurs : ne les publier qu'avec leur accord
 (vos propres comptes, vos fournisseurs). L'utilisateur est seul responsable de l'usage qu'il en fait.
 
 ## Licences
 
 Le code de ShopSnap est fourni tel quel par StackLLM. Dépendances : instaloader (MIT), yt-dlp (Unlicense),
-Flask (BSD-3-Clause), FFmpeg (LGPL/GPL, installé dans l'image Docker).
+gallery-dl (GPL-2.0, appelé comme programme séparé), Flask (BSD-3-Clause), FFmpeg (LGPL/GPL, installé dans l'image Docker).
