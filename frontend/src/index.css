@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Thème clair : ivoire et bronze */
+:root {
+  --background: 40 33% 96%;
+  --foreground: 30 12% 10%;
+  --card: 40 40% 99%;
+  --card-foreground: 30 12% 10%;
+  --popover: 40 40% 99%;
+  --popover-foreground: 30 12% 10%;
+  --primary: 38 45% 42%;
+  --primary-foreground: 40 40% 98%;
+  --secondary: 38 25% 90%;
+  --secondary-foreground: 30 12% 15%;
+  --muted: 38 20% 90%;
+  --muted-foreground: 30 8% 40%;
+  --accent: 38 35% 88%;
+  --accent-foreground: 30 12% 12%;
+  --destructive: 4 60% 45%;
+  --destructive-foreground: 40 40% 98%;
+  --border: 36 22% 84%;
+  --input: 36 22% 84%;
+  --ring: 38 45% 42%;
+  --succes: 150 40% 32%;
+  --alerte: 33 75% 40%;
+  --radius: 1rem;
+  --verre: 40 40% 99% / 0.72;
+}
+
+/* Thème sombre (par défaut) : noir chaud et champagne */
+.dark {
+  --background: 30 10% 4%;
+  --foreground: 38 30% 92%;
+  --card: 30 8% 7%;
+  --card-foreground: 38 30% 92%;
+  --popover: 30 8% 8%;
+  --popover-foreground: 38 30% 92%;
+  --primary: 39 45% 61%;
+  --primary-foreground: 30 10% 6%;
+  --secondary: 30 6% 12%;
+  --secondary-foreground: 38 30% 90%;
+  --muted: 30 6% 12%;
+  --muted-foreground: 35 10% 58%;
+  --accent: 34 14% 14%;
+  --accent-foreground: 38 30% 92%;
+  --destructive: 4 62% 58%;
+  --destructive-foreground: 38 30% 96%;
+  --border: 38 25% 70% / 0.12;
+  --input: 38 25% 70% / 0.16;
+  --ring: 39 45% 61%;
+  --succes: 150 38% 52%;
+  --alerte: 38 80% 60%;
+  --verre: 30 8% 8% / 0.62;
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { color-scheme: dark; }
+  html:not(.dark) { color-scheme: light; }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection { background: hsl(var(--primary) / 0.3); }
+}
+
+@layer components {
+  /* Panneau en verre dépoli, filet doré */
+  .verre {
+    background: hsl(var(--verre));
+    @apply backdrop-blur-xl border border-border rounded-2xl;
+    box-shadow: 0 1px 0 0 hsl(var(--primary) / 0.08) inset, 0 30px 60px -30px rgb(0 0 0 / 0.45);
+  }
+  .surtitre { @apply text-[11px] uppercase tracking-[0.28em] text-muted-foreground; }
+  .titre-luxe { @apply font-display font-medium tracking-tight; }
+  .filet-or {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.55), transparent);
+  }
+}
+
+/* Grain léger sur tout le fond */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

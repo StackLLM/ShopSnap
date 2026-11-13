@@ -12,6 +12,8 @@ Pensé pour les e-commerçants : constituer la banque de visuels produits d'une 
   un dossier par lien même pour une seule image.
 - **Liste d'abonnements à cocher** : classée Vêtements / Chaussures / Commerce… ; cocher une page remplit le champ Profil.
 - **Anti-blocage** : un téléchargement à la fois, 90 s entre deux profils.
+- **Interface premium** : thème noir et champagne (ou clair ivoire), composants animés [Lightswind](https://lightswind.com),
+  visionneuse plein écran, notifications, compteurs, onglets Récupérer / Abonnements / Historique, mobile.
 
 Basé sur trois projets open source : [instaloader](https://github.com/instaloader/instaloader) (Instagram : profils, photos),
 [yt-dlp](https://github.com/yt-dlp/yt-dlp) (vidéos, Reels, pubs) et [gallery-dl](https://github.com/mikf/gallery-dl) (Facebook : photos, albums).
@@ -52,11 +54,14 @@ Les deux outils l'utilisent alors automatiquement.
 2. **Un lien** : coller ou glisser un lien.
    - Instagram : post (instaloader prend les photos, yt-dlp les vidéos éventuelles) ou Reel.
    - Facebook : album (`facebook.com/media/set/?set=…`), vidéo, Reel, `fb.watch`, pub Meta Ad Library.
-3. Quand le statut passe à **prêt**, vérifier l'aperçu puis :
+3. Quand le statut passe à **prêt**, vérifier l'aperçu (clic sur une vignette : visionneuse, flèches, Échap) puis :
    - **Télécharger dans le dossier** → `destination/liens/<compte>/<code>/` ou `destination/profils/<profil>/`
      (Facebook : `destination/facebook/profils/<page>/`, `facebook/liens/<page>/<id>/`, `facebook/pubs/<id>/`)
    - **Télécharger en ZIP** → `destination/liens/<compte>/<code>.zip` (sans compression : qualité intacte)
-   - **Rejeter** → efface la récupération
+   - **Glisser pour rejeter** → efface la récupération (au clavier : bouton « Rejeter » avec confirmation)
+
+Raccourcis : glisser un lien sur un champ lance la récupération ; **⌘/Ctrl + Entrée** envoie le champ.
+Les récupérations enregistrées ou rejetées passent dans l'onglet **Historique** (jusqu'au redémarrage).
 
 ### Liste « Mes abonnements »
 
@@ -81,12 +86,17 @@ ShopSnap/
 │   ├── taches.py              File d'attente et exécution (zone d'attente)
 │   ├── enregistrement.py      Enregistrement en dossier ou en ZIP
 │   ├── routes.py              Page web et API JSON (Flask)
-│   └── static/                index.html, css/style.css, js/app.js
+│   └── static/                Interface construite (générée, non versionnée)
+├── frontend/                  Interface React + Vite + Tailwind + Lightswind
+│   ├── src/App.tsx            Page : en-tête, compteurs, onglets
+│   ├── src/components/app/    Cartes de saisie, carte de récupération, visionneuse, abonnements
+│   ├── src/components/lightswind/  Composants Lightswind (copiés depuis le registre, MIT)
+│   └── src/test/              Tests Vitest
 ├── scripts/
 │   ├── classer_abonnements.py Classement des abonnements → Excel + JSON
 │   └── recepteur.py           Récepteur local ponctuel (transfert d'une liste depuis le navigateur)
 ├── tests/                     Tests pytest (commandes, enregistrement, classement)
-├── Dockerfile · compose.yml   Image Python 3.12 + ffmpeg, versions figées
+├── Dockerfile · compose.yml   Construction de l'interface (Node 22) puis image Python 3.12 + ffmpeg
 ├── requirements.txt           flask, instaloader, yt-dlp, gallery-dl (versions figées)
 └── .env.example               Réglages locaux à copier en .env
 ```
@@ -106,9 +116,11 @@ ShopSnap/
 ## Développement
 
 ```bash
-uv run --python 3.12 --no-project --with-requirements requirements-dev.txt python -m pytest -q
+uv run --python 3.12 --no-project --with-requirements requirements-dev.txt python -m pytest -q   # API
+cd frontend && npm ci && npm test                                                              # interface
 ```
 
+Interface en direct : `cd frontend && npm run dev` → http://127.0.0.1:5180 (l'API de Docker sur 8765 est relayée).
 Après une modification : `docker compose up -d --build`.
 
 ## Limites à connaître
@@ -131,4 +143,5 @@ Les contenus récupérés restent la propriété de leurs auteurs : ne les publi
 ## Licences
 
 Le code de ShopSnap est fourni tel quel par StackLLM. Dépendances : instaloader (MIT), yt-dlp (Unlicense),
-gallery-dl (GPL-2.0, appelé comme programme séparé), Flask (BSD-3-Clause), FFmpeg (LGPL/GPL, installé dans l'image Docker).
+gallery-dl (GPL-2.0, appelé comme programme séparé), Flask (BSD-3-Clause), FFmpeg (LGPL/GPL, installé dans l'image Docker),
+Lightswind UI (MIT), React (MIT), Tailwind CSS (MIT), framer-motion (MIT), lucide (ISC), polices Inter et Cormorant Garamond (OFL).

@@ -61,6 +61,7 @@ def run(job):
     except Exception as e:  # noqa: BLE001
         job['log'].append(f'Erreur : {e}')
         job['status'] = 'échec'
+        shutil.rmtree(base, ignore_errors=True)  # ne pas laisser de dossier vide en zone d'attente
     job['ended'] = time.time()
 
 

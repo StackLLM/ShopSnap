@@ -17,3 +17,8 @@ __pycache__/
 # Système
 .DS_Store
 CLAUDE.local.md
+
+# Interface construite (générée par Docker ou « npm run build »)
+shopsnap/static/
+frontend/node_modules/
+*.tsbuildinfo
